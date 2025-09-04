@@ -480,40 +480,41 @@ struct BrowserDownloadDialog: View {
         VStack(spacing: 0) {
             if let request = request {
                 // Header - similar to image design
-                VStack(spacing: 16) {
-                    HStack {
+                VStack(spacing: 20) {
+                    HStack(spacing: 16) {
                         Image(systemName: "arrow.down.doc.fill")
-                            .font(.system(size: 32))
+                            .font(.system(size: 36))
                             .foregroundColor(.blue)
                         
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 4) {
                             Text("Download File")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 20, weight: .semibold))
                             Text("Confirm download details")
-                                .font(.system(size: 13))
+                                .font(.system(size: 14))
                                 .foregroundColor(.secondary)
                         }
                         
                         Spacer()
                         
                         if !fileSize.isEmpty {
-                            VStack(alignment: .trailing) {
+                            VStack(alignment: .trailing, spacing: 2) {
                                 Text(fileSize)
-                                    .font(.system(size: 16, weight: .medium))
+                                    .font(.system(size: 18, weight: .medium))
                                 Text("Size")
-                                    .font(.system(size: 11))
+                                    .font(.system(size: 12))
                                     .foregroundColor(.secondary)
                             }
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 16)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 24)
+                    .padding(.bottom, 8)
                 }
                 
                 Divider()
                 
                 // Form content matching the design
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 24) {
                     // URL field
                     VStack(alignment: .leading, spacing: 6) {
                         Text("URL")
@@ -521,10 +522,15 @@ struct BrowserDownloadDialog: View {
                         
                         Text(request.url)
                             .font(.system(size: 12, design: .monospaced))
-                            .padding(8)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color(NSColor.controlBackgroundColor))
-                            .cornerRadius(6)
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                            )
                             .lineLimit(1)
                             .truncationMode(.middle)
                     }
@@ -577,7 +583,9 @@ struct BrowserDownloadDialog: View {
                         Text(destinationPath.path)
                             .font(.system(size: 11))
                             .foregroundColor(.secondary)
-                            .padding(.horizontal, 20)
+                            .padding(.leading, 20)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
                     }
                     
                     // Description field (empty in design)
@@ -586,41 +594,51 @@ struct BrowserDownloadDialog: View {
                             .font(.system(size: 13, weight: .medium))
                         
                         TextEditor(text: .constant(""))
-                            .frame(height: 60)
+                            .frame(height: 80)
                             .background(Color(NSColor.controlBackgroundColor))
                             .cornerRadius(6)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                            )
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
                 
                 Spacer()
                 
                 Divider()
                 
                 // Action buttons
-                HStack(spacing: 12) {
+                HStack(spacing: 16) {
                     Button("Download Later") {
                         downloadLater()
                     }
                     .buttonStyle(.bordered)
+                    .controlSize(.large)
                     
-                    Button("Start Download") {
-                        startDownload()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .keyboardShortcut(.defaultAction)
+                    Spacer()
                     
                     Button("Cancel") {
                         dismiss()
                     }
                     .buttonStyle(.bordered)
+                    .controlSize(.large)
                     .keyboardShortcut(.cancelAction)
+                    
+                    Button("Start Download") {
+                        startDownload()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .keyboardShortcut(.defaultAction)
                 }
-                .padding(16)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
             }
         }
-        .frame(width: 500, height: 400)
+        .frame(width: 600, height: 550)
         .background(VisualEffectBackground())
         .onAppear {
             if let request = request {
