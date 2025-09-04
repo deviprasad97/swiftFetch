@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SwiftFetch Download Manager",
+  "version": "1.0.0",
+  "description": "Capture downloads and send them to SwiftFetch app",
+  
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyxYgeKLvsGvVNVjL8hdQxr8RjdSvT5jRHcKHTE7lnKcHmsKqI6mXKuPl4z1N3lnNq/b9lBQGMEj7VvTqpQ7PJ5s8GsZ0BvsZ/qHDz9HjqGdmFIZxPw3T7Z9AWX9rMk3YF+gqGdF5r9cIpZpgFKKKyQhav5r1NBwxGMvOz7i8W+jFzYwBUQ2hP8TxRovJjLbckVRsKpJC8wVANjRlU+wBhcTLrZhGWbMb0IRzSqggRWqhp9H2xj6q9FKS/KoROcGZN3cNL8CxL3IF0EhW5KYaQl6NmJvdO9XqrQzJoRxMOHvzJMqKp3wpID3g5b+SIBexY5QiGSn1bMxYHwVb7wIDAQAB",
+  
+  "permissions": [
+    "downloads",
+    "contextMenus",
+    "storage",
+    "nativeMessaging",
+    "webRequest",
+    "webNavigation",
+    "tabs",
+    "activeTab",
+    "cookies"
+  ],
+  
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

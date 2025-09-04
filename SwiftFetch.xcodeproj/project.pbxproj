@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A2B3C4D2B1E5F6700123456 /* SwiftFetchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4C2B1E5F6700123456 /* SwiftFetchApp.swift */; };
+		1A2B3C4F2B1E5F6700123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4E2B1E5F6700123456 /* ContentView.swift */; };
+		1A2B3C512B1E5F6800123456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C502B1E5F6800123456 /* Assets.xcassets */; };
+		1A2B3C542B1E5F6800123456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C532B1E5F6800123456 /* Preview Assets.xcassets */; };
+		1A2B3C5B2B1E5F8900123456 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C5A2B1E5F8900123456 /* DownloadManager.swift */; };
+		1A2B3C5D2B1E5FA100123456 /* DownloadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C5C2B1E5FA100123456 /* DownloadListView.swift */; };
+		1A2B3C5F2B1E5FB200123456 /* NewDownloadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C5E2B1E5FB200123456 /* NewDownloadSheet.swift */; };
+		1A2B3C612B1E5FC300123456 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C602B1E5FC300123456 /* SettingsView.swift */; };
+		1A2B3C632B1E5FD400123456 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C622B1E5FD400123456 /* DatabaseManager.swift */; };
+		1A2B3C652B1E5FE500123456 /* BrowserBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C642B1E5FE500123456 /* BrowserBridge.swift */; };
+		1A2B3C672B1E5FF600123456 /* aria2.conf in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C662B1E5FF600123456 /* aria2.conf */; };
+		1A2B3C702B1E5F6700123456 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C6F2B1E5F6700123456 /* DownloadTask.swift */; };
+		1A2B3C712B1E5F6800123456 /* Aria2Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C722B1E5F6800123456 /* Aria2Client.swift */; };
+		1A2B3C732B1E5F6900123456 /* SimpleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C742B1E5F6900123456 /* SimpleSettingsView.swift */; };
+		1A2B3C752B1E5F6A00123456 /* ModernDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C762B1E5F6A00123456 /* ModernDownloadRow.swift */; };
+		1A2B3C772B1E5F6B00123456 /* ModernContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C782B1E5F6B00123456 /* ModernContentView.swift */; };
+		1A2B3C792B1E5F6C00123456 /* ModernDownloadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C7A2B1E5F6C00123456 /* ModernDownloadListView.swift */; };
+		1A2B3C7B2B1E5F6D00123456 /* ModernSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C7C2B1E5F6D00123456 /* ModernSettingsView.swift */; };
+		1A2B3C7D2B1E5F6E00123456 /* ModernNewDownloadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C7E2B1E5F6E00123456 /* ModernNewDownloadSheet.swift */; };
+		1A2B3C7F2B1E5F6F00123456 /* ModernListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C802B1E5F6F00123456 /* ModernListView.swift */; };
+		1A2B3C842B1E5FD500123456 /* SimpleStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C832B1E5FD500123456 /* SimpleStorageManager.swift */; };
+		424AFC6A921FEFCCCF58211C /* BrowserIntegrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78CBD062409937A065A2A87 /* BrowserIntegrationView.swift */; };
+		4CDFA7DCFDCF73862FC4212D /* NativeMessagingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F980E9B0F8C920D424F20E /* NativeMessagingHandler.swift */; };
+		6E534ACA130CB51AE520D93D /* BrowserIntegrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC48EFDD1566EFBBF29C37E /* BrowserIntegrationManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A2B3C492B1E5F6700123456 /* SwiftFetch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftFetch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A2B3C4C2B1E5F6700123456 /* SwiftFetchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftFetchApp.swift; sourceTree = "<group>"; };
+		1A2B3C4E2B1E5F6700123456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1A2B3C502B1E5F6800123456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1A2B3C532B1E5F6800123456 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1A2B3C552B1E5F6800123456 /* SwiftFetch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftFetch.entitlements; sourceTree = "<group>"; };
+		1A2B3C5A2B1E5F8900123456 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		1A2B3C5C2B1E5FA100123456 /* DownloadListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListView.swift; sourceTree = "<group>"; };
+		1A2B3C5E2B1E5FB200123456 /* NewDownloadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDownloadSheet.swift; sourceTree = "<group>"; };
+		1A2B3C602B1E5FC300123456 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1A2B3C622B1E5FD400123456 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		1A2B3C642B1E5FE500123456 /* BrowserBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserBridge.swift; sourceTree = "<group>"; };
+		1A2B3C662B1E5FF600123456 /* aria2.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = aria2.conf; sourceTree = "<group>"; };
+		1A2B3C6F2B1E5F6700123456 /* DownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
+		1A2B3C722B1E5F6800123456 /* Aria2Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aria2Client.swift; sourceTree = "<group>"; };
+		1A2B3C742B1E5F6900123456 /* SimpleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSettingsView.swift; sourceTree = "<group>"; };
+		1A2B3C762B1E5F6A00123456 /* ModernDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernDownloadRow.swift; sourceTree = "<group>"; };
+		1A2B3C782B1E5F6B00123456 /* ModernContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernContentView.swift; sourceTree = "<group>"; };
+		1A2B3C7A2B1E5F6C00123456 /* ModernDownloadListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernDownloadListView.swift; sourceTree = "<group>"; };
+		1A2B3C7C2B1E5F6D00123456 /* ModernSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernSettingsView.swift; sourceTree = "<group>"; };
+		1A2B3C7E2B1E5F6E00123456 /* ModernNewDownloadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernNewDownloadSheet.swift; sourceTree = "<group>"; };
+		1A2B3C802B1E5F6F00123456 /* ModernListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernListView.swift; sourceTree = "<group>"; };
+		1A2B3C832B1E5FD500123456 /* SimpleStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStorageManager.swift; sourceTree = "<group>"; };
+		6CC48EFDD1566EFBBF29C37E /* BrowserIntegrationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BrowserIntegrationManager.swift; sourceTree = "<group>"; };
+		B6F980E9B0F8C920D424F20E /* NativeMessagingHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeMessagingHandler.swift; sourceTree = "<group>"; };
+		F78CBD062409937A065A2A87 /* BrowserIntegrationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BrowserIntegrationView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A2B3C462B1E5F6700123456 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A2B3C402B1E5F6700123456 = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C4B2B1E5F6700123456 /* SwiftFetch */,
+				1A2B3C4A2B1E5F6700123456 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1A2B3C4A2B1E5F6700123456 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C492B1E5F6700123456 /* SwiftFetch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1A2B3C4B2B1E5F6700123456 /* SwiftFetch */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C4C2B1E5F6700123456 /* SwiftFetchApp.swift */,
+				1A2B3C4E2B1E5F6700123456 /* ContentView.swift */,
+				1A2B3C6E2B1E600200123456 /* Models */,
+				1A2B3C682B1E600700123456 /* Views */,
+				1A2B3C692B1E601200123456 /* Services */,
+				1A2B3C6A2B1E601D00123456 /* Resources */,
+				1A2B3C502B1E5F6800123456 /* Assets.xcassets */,
+				1A2B3C552B1E5F6800123456 /* SwiftFetch.entitlements */,
+				1A2B3C522B1E5F6800123456 /* Preview Content */,
+			);
+			path = SwiftFetch;
+			sourceTree = "<group>";
+		};
+		1A2B3C522B1E5F6800123456 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C532B1E5F6800123456 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1A2B3C682B1E600700123456 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C5C2B1E5FA100123456 /* DownloadListView.swift */,
+				1A2B3C5E2B1E5FB200123456 /* NewDownloadSheet.swift */,
+				1A2B3C602B1E5FC300123456 /* SettingsView.swift */,
+				1A2B3C742B1E5F6900123456 /* SimpleSettingsView.swift */,
+				1A2B3C762B1E5F6A00123456 /* ModernDownloadRow.swift */,
+				1A2B3C782B1E5F6B00123456 /* ModernContentView.swift */,
+				1A2B3C7A2B1E5F6C00123456 /* ModernDownloadListView.swift */,
+				1A2B3C7C2B1E5F6D00123456 /* ModernSettingsView.swift */,
+				1A2B3C7E2B1E5F6E00123456 /* ModernNewDownloadSheet.swift */,
+				1A2B3C802B1E5F6F00123456 /* ModernListView.swift */,
+				F78CBD062409937A065A2A87 /* BrowserIntegrationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1A2B3C692B1E601200123456 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C5A2B1E5F8900123456 /* DownloadManager.swift */,
+				1A2B3C722B1E5F6800123456 /* Aria2Client.swift */,
+				1A2B3C622B1E5FD400123456 /* DatabaseManager.swift */,
+				1A2B3C832B1E5FD500123456 /* SimpleStorageManager.swift */,
+				1A2B3C642B1E5FE500123456 /* BrowserBridge.swift */,
+				6CC48EFDD1566EFBBF29C37E /* BrowserIntegrationManager.swift */,
+				B6F980E9B0F8C920D424F20E /* NativeMessagingHandler.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1A2B3C6A2B1E601D00123456 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C662B1E5FF600123456 /* aria2.conf */,
+			);
+			name = Resources;
+			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		1A2B3C6E2B1E600200123456 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1A2B3C6F2B1E5F6700123456 /* DownloadTask.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A2B3C482B1E5F6700123456 /* SwiftFetch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A2B3C582B1E5F6800123456 /* Build configuration list for PBXNativeTarget "SwiftFetch" */;
+			buildPhases = (
+				1A2B3C452B1E5F6700123456 /* Sources */,
+				1A2B3C462B1E5F6700123456 /* Frameworks */,
+				1A2B3C472B1E5F6700123456 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftFetch;
+			productName = SwiftFetch;
+			productReference = 1A2B3C492B1E5F6700123456 /* SwiftFetch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1A2B3C412B1E5F6700123456 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					1A2B3C482B1E5F6700123456 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 1A2B3C442B1E5F6700123456 /* Build configuration list for PBXProject "SwiftFetch" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1A2B3C402B1E5F6700123456;
+			productRefGroup = 1A2B3C4A2B1E5F6700123456 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1A2B3C482B1E5F6700123456 /* SwiftFetch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A2B3C472B1E5F6700123456 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B3C542B1E5F6800123456 /* Preview Assets.xcassets in Resources */,
+				1A2B3C512B1E5F6800123456 /* Assets.xcassets in Resources */,
+				1A2B3C672B1E5FF600123456 /* aria2.conf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A2B3C452B1E5F6700123456 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A2B3C4F2B1E5F6700123456 /* ContentView.swift in Sources */,
+				1A2B3C702B1E5F6700123456 /* DownloadTask.swift in Sources */,
+				1A2B3C5D2B1E5FA100123456 /* DownloadListView.swift in Sources */,
+				1A2B3C5F2B1E5FB200123456 /* NewDownloadSheet.swift in Sources */,
+				1A2B3C612B1E5FC300123456 /* SettingsView.swift in Sources */,
+				1A2B3C5B2B1E5F8900123456 /* DownloadManager.swift in Sources */,
+				1A2B3C712B1E5F6800123456 /* Aria2Client.swift in Sources */,
+				1A2B3C632B1E5FD400123456 /* DatabaseManager.swift in Sources */,
+				1A2B3C842B1E5FD500123456 /* SimpleStorageManager.swift in Sources */,
+				1A2B3C652B1E5FE500123456 /* BrowserBridge.swift in Sources */,
+				1A2B3C732B1E5F6900123456 /* SimpleSettingsView.swift in Sources */,
+				1A2B3C752B1E5F6A00123456 /* ModernDownloadRow.swift in Sources */,
+				1A2B3C772B1E5F6B00123456 /* ModernContentView.swift in Sources */,
+				1A2B3C792B1E5F6C00123456 /* ModernDownloadListView.swift in Sources */,
+				1A2B3C7B2B1E5F6D00123456 /* ModernSettingsView.swift in Sources */,
+				1A2B3C7D2B1E5F6E00123456 /* ModernNewDownloadSheet.swift in Sources */,
+				1A2B3C7F2B1E5F6F00123456 /* ModernListView.swift in Sources */,
+				1A2B3C4D2B1E5F6700123456 /* SwiftFetchApp.swift in Sources */,
+				6E534ACA130CB51AE520D93D /* BrowserIntegrationManager.swift in Sources */,
+				424AFC6A921FEFCCCF58211C /* BrowserIntegrationView.swift in Sources */,
+				4CDFA7DCFDCF73862FC4212D /* NativeMessagingHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A2B3C562B1E5F6800123456 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1A2B3C572B1E5F6800123456 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		1A2B3C592B1E5F6800123456 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftFetch/SwiftFetch.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftFetch/Preview Content\"";
+				DEVELOPMENT_TEAM = GGZ5B2R5VP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftfetch.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1A2B3C5A2B1E5F6800123456 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftFetch/SwiftFetch.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftFetch/Preview Content\"";
+				DEVELOPMENT_TEAM = GGZ5B2R5VP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftfetch.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A2B3C442B1E5F6700123456 /* Build configuration list for PBXProject "SwiftFetch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A2B3C562B1E5F6800123456 /* Debug */,
+				1A2B3C572B1E5F6800123456 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A2B3C582B1E5F6800123456 /* Build configuration list for PBXNativeTarget "SwiftFetch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A2B3C592B1E5F6800123456 /* Debug */,
+				1A2B3C5A2B1E5F6800123456 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1A2B3C412B1E5F6700123456 /* Project object */;
+}
