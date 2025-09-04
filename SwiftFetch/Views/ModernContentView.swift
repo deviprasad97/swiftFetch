@@ -7,6 +7,8 @@ struct ModernContentView: View {
     @State private var showingSettings = false
     @State private var showingNewDownload = false
     @State private var showingBatchImport = false
+    @State private var showingBrowserDownload = false
+    @State private var browserDownloadRequest: BrowserDownloadRequest?
     @State private var viewMode: ViewMode = .card
     
     enum ViewMode: String, CaseIterable {
@@ -170,14 +172,22 @@ struct ModernContentView: View {
         .sheet(isPresented: $showingSettings) {
             ModernSettingsView()
         }
+        .sheet(isPresented: $showingBrowserDownload) {
+            BrowserDownloadDialog(request: browserDownloadRequest)
+        }
         .onOpenURL { url in
             handleIncomingURL(url)
         }
     }
     
     private func handleIncomingURL(_ url: URL) {
-        // Bring window to front
+        // Activate app and bring existing window to front
         NSApp.activate(ignoringOtherApps: true)
+        
+        // Find and activate the main window
+        if let mainWindow = NSApp.windows.first(where: { $0.isVisible }) {
+            mainWindow.makeKeyAndOrderFront(nil)
+        }
         
         // Parse swiftfetch://download?url=...&filename=...
         guard url.scheme == "swiftfetch",
@@ -197,38 +207,33 @@ struct ModernContentView: View {
         print("Received download URL: \(downloadURL)")
         print("Filename: \(filename ?? "none")")
         
-        // Add download
+        // Create browser download request and show dialog
         guard let url = URL(string: downloadURL) else {
             print("Invalid URL: \(downloadURL)")
             return
         }
         
-        Task {
-            do {
-                var headers: [String: String] = [:]
-                if let referrer = referrer {
-                    headers["Referer"] = referrer
-                }
-                if let cookies = cookies, !cookies.isEmpty {
-                    headers["Cookie"] = cookies
-                }
-                if let userAgent = userAgent {
-                    headers["User-Agent"] = userAgent
-                }
-                
-                let options = DownloadOptions(
-                    destination: nil,
-                    filename: filename,
-                    segments: 4,
-                    headers: headers
-                )
-                
-                let task = try await downloadManager.addDownload(url: url, options: options)
-                print("Download added successfully: \(task.id)")
-            } catch {
-                print("Failed to add download: \(error)")
-            }
+        var headers: [String: String] = [:]
+        if let referrer = referrer {
+            headers["Referer"] = referrer
         }
+        if let cookies = cookies, !cookies.isEmpty {
+            headers["Cookie"] = cookies
+        }
+        if let userAgent = userAgent {
+            headers["User-Agent"] = userAgent
+        }
+        
+        browserDownloadRequest = BrowserDownloadRequest(
+            url: url.absoluteString,
+            filename: filename,
+            referrer: referrer,
+            cookies: cookies,
+            userAgent: userAgent,
+            tabUrl: nil,
+            tabTitle: nil
+        )
+        showingBrowserDownload = true
     }
 }
 
@@ -454,5 +459,282 @@ struct VisualEffectBackground: NSViewRepresentable {
     func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
         nsView.material = material
         nsView.blendingMode = blendingMode
+    }
+}
+
+
+struct BrowserDownloadDialog: View {
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var downloadManager: DownloadManager
+    let request: BrowserDownloadRequest?
+    
+    @State private var customFilename = ""
+    @State private var selectedCategory = "General"
+    @State private var destinationPath = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+    @State private var rememberPath = false
+    @State private var fileSize: String = ""
+    
+    let categories = ["General", "Documents", "Videos", "Music", "Archives", "Software"]
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            if let request = request {
+                // Header - similar to image design
+                VStack(spacing: 16) {
+                    HStack {
+                        Image(systemName: "arrow.down.doc.fill")
+                            .font(.system(size: 32))
+                            .foregroundColor(.blue)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Download File")
+                                .font(.system(size: 18, weight: .semibold))
+                            Text("Confirm download details")
+                                .font(.system(size: 13))
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        if !fileSize.isEmpty {
+                            VStack(alignment: .trailing) {
+                                Text(fileSize)
+                                    .font(.system(size: 16, weight: .medium))
+                                Text("Size")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 16)
+                }
+                
+                Divider()
+                
+                // Form content matching the design
+                VStack(alignment: .leading, spacing: 20) {
+                    // URL field
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("URL")
+                            .font(.system(size: 13, weight: .medium))
+                        
+                        Text(request.url)
+                            .font(.system(size: 12, design: .monospaced))
+                            .padding(8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(NSColor.controlBackgroundColor))
+                            .cornerRadius(6)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    }
+                    
+                    // Category picker
+                    HStack {
+                        Text("Category")
+                            .font(.system(size: 13, weight: .medium))
+                            .frame(width: 80, alignment: .leading)
+                        
+                        Picker("", selection: $selectedCategory) {
+                            ForEach(categories, id: \.self) { category in
+                                Text(category).tag(category)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(maxWidth: .infinity)
+                        
+                        Button(action: { /* Add new category */ }) {
+                            Image(systemName: "plus")
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    
+                    // Save As field
+                    HStack {
+                        Text("Save As")
+                            .font(.system(size: 13, weight: .medium))
+                            .frame(width: 80, alignment: .leading)
+                        
+                        TextField(request.filename ?? "filename", text: $customFilename)
+                            .textFieldStyle(.roundedBorder)
+                        
+                        Button("...") {
+                            // File browser button
+                        }
+                        .buttonStyle(.bordered)
+                        .frame(width: 40)
+                    }
+                    
+                    // Remember path checkbox
+                    VStack(alignment: .leading, spacing: 8) {
+                        Toggle(isOn: $rememberPath) {
+                            Text("Remember this path for \"\(selectedCategory)\" category")
+                                .font(.system(size: 12))
+                        }
+                        .toggleStyle(.checkbox)
+                        
+                        // Path display
+                        Text(destinationPath.path)
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 20)
+                    }
+                    
+                    // Description field (empty in design)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Description")
+                            .font(.system(size: 13, weight: .medium))
+                        
+                        TextEditor(text: .constant(""))
+                            .frame(height: 60)
+                            .background(Color(NSColor.controlBackgroundColor))
+                            .cornerRadius(6)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 16)
+                
+                Spacer()
+                
+                Divider()
+                
+                // Action buttons
+                HStack(spacing: 12) {
+                    Button("Download Later") {
+                        downloadLater()
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Button("Start Download") {
+                        startDownload()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .keyboardShortcut(.defaultAction)
+                    
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut(.cancelAction)
+                }
+                .padding(16)
+            }
+        }
+        .frame(width: 500, height: 400)
+        .background(VisualEffectBackground())
+        .onAppear {
+            if let request = request {
+                customFilename = request.filename ?? URL(string: request.url)?.lastPathComponent ?? "download"
+                loadFileSize()
+            }
+        }
+    }
+    
+    private func loadFileSize() {
+        guard let request = request,
+              let url = URL(string: request.url) else { return }
+        
+        Task {
+            do {
+                var urlRequest = URLRequest(url: url)
+                urlRequest.httpMethod = "HEAD"
+                
+                // Add headers from browser
+                if let referrer = request.referrer {
+                    urlRequest.setValue(referrer, forHTTPHeaderField: "Referer")
+                }
+                if let cookies = request.cookies {
+                    urlRequest.setValue(cookies, forHTTPHeaderField: "Cookie")
+                }
+                if let userAgent = request.userAgent {
+                    urlRequest.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+                }
+                
+                let (_, response) = try await URLSession.shared.data(for: urlRequest)
+                
+                if let httpResponse = response as? HTTPURLResponse,
+                   let contentLength = httpResponse.value(forHTTPHeaderField: "Content-Length"),
+                   let bytes = Int64(contentLength) {
+                    
+                    await MainActor.run {
+                        fileSize = ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file)
+                    }
+                }
+            } catch {
+                print("Failed to get file size: \(error)")
+            }
+        }
+    }
+    
+    private func startDownload() {
+        guard let request = request,
+              let url = URL(string: request.url) else { return }
+        
+        Task {
+            do {
+                var headers: [String: String] = [:]
+                if let referrer = request.referrer {
+                    headers["Referer"] = referrer
+                }
+                if let cookies = request.cookies {
+                    headers["Cookie"] = cookies
+                }
+                if let userAgent = request.userAgent {
+                    headers["User-Agent"] = userAgent
+                }
+                
+                let options = DownloadOptions(
+                    destination: destinationPath,
+                    filename: customFilename.isEmpty ? nil : customFilename,
+                    segments: 4,
+                    headers: headers
+                )
+                
+                _ = try await downloadManager.addDownload(url: url, options: options)
+                await MainActor.run {
+                    dismiss()
+                }
+            } catch {
+                print("Failed to start download: \(error)")
+            }
+        }
+    }
+    
+    private func downloadLater() {
+        guard let request = request,
+              let url = URL(string: request.url) else { return }
+        
+        Task {
+            do {
+                var headers: [String: String] = [:]
+                if let referrer = request.referrer {
+                    headers["Referer"] = referrer
+                }
+                if let cookies = request.cookies {
+                    headers["Cookie"] = cookies
+                }
+                if let userAgent = request.userAgent {
+                    headers["User-Agent"] = userAgent
+                }
+                
+                let options = DownloadOptions(
+                    destination: destinationPath,
+                    filename: customFilename.isEmpty ? nil : customFilename,
+                    segments: 4,
+                    headers: headers
+                )
+                
+                let task = try await downloadManager.addDownload(url: url, options: options)
+                
+                // Immediately pause the download so it's queued for later
+                try await downloadManager.pauseDownload(taskId: task.id)
+                
+                await MainActor.run {
+                    dismiss()
+                }
+            } catch {
+                print("Failed to add download: \(error)")
+            }
+        }
     }
 }

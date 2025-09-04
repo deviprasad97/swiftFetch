@@ -6,6 +6,7 @@ import SwiftUI
 struct SwiftFetchApp: App {
     @StateObject private var downloadManager = DownloadManager()
     @StateObject private var browserBridge = BrowserBridge()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
         // Check if running in native messaging mode
@@ -34,6 +35,7 @@ struct SwiftFetchApp: App {
                 .onAppear {
                     setupApplication()
                 }
+                .handlesExternalEvents(preferring: Set(["*"]), allowing: Set(["*"]))
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.automatic)
@@ -70,6 +72,9 @@ struct SwiftFetchApp: App {
     }
     
     private func setupApplication() {
+        // Register as default handler for swiftfetch:// URLs
+        registerAsDefaultURLHandler()
+        
         // TODO: Configure Sparkle updater when added
         // updaterController.updater.automaticallyChecksForUpdates = true
         // updaterController.updater.updateCheckInterval = 86400 // Daily
@@ -124,6 +129,53 @@ struct SwiftFetchApp: App {
         if alert.runModal() == .alertFirstButtonReturn {
             BrowserIntegrationManager.shared.openExtensionInstallPage()
         }
+    }
+    
+    private func registerAsDefaultURLHandler() {
+        // Force registration as handler for swiftfetch:// URLs
+        guard let bundleID = Bundle.main.bundleIdentifier else { return }
+        
+        // Use LSSetDefaultHandlerForURLScheme to register
+        let result = LSSetDefaultHandlerForURLScheme("swiftfetch" as CFString, bundleID as CFString)
+        
+        if result == noErr {
+            print("✅ Successfully registered as handler for swiftfetch:// URLs")
+        } else {
+            print("⚠️ Failed to register as URL handler: \(result)")
+        }
+    }
+}
+
+// App Delegate for window management
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        // If no windows are visible, show the main window
+        if !flag {
+            for window in sender.windows {
+                window.makeKeyAndOrderFront(nil)
+            }
+        }
+        return true
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Ensure we're the default handler for swiftfetch:// URLs
+        if let bundleID = Bundle.main.bundleIdentifier {
+            LSSetDefaultHandlerForURLScheme("swiftfetch" as CFString, bundleID as CFString)
+        }
+    }
+    
+    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        // Prevent creating new untitled windows
+        return false
+    }
+    
+    func applicationOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        // Just activate the existing window
+        if let window = NSApp.windows.first {
+            window.makeKeyAndOrderFront(nil)
+        }
+        return true
     }
 }
 

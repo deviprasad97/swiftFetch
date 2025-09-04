@@ -122,13 +122,14 @@ struct BrowserIntegrationView: View {
     
     private func installExtension() {
         // For local testing, open the Extensions folder
-        let projectPath = "/Users/devitripathy/code/download_manager/SwiftFetch/Extensions/Chrome"
-        if FileManager.default.fileExists(atPath: projectPath) {
+        // Use the extension bundled with the app
+        let extensionPath = Bundle.main.bundlePath + "/Contents/Resources/Chrome Extension"
+        if FileManager.default.fileExists(atPath: extensionPath) {
             // Open Chrome extensions page with instructions
             NSWorkspace.shared.open(URL(string: "chrome://extensions")!)
             
             // Also open the folder in Finder
-            NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: projectPath)
+            NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: extensionPath)
             
             // Show alert with instructions
             let alert = NSAlert()
