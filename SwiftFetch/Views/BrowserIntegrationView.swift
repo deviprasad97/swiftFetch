@@ -96,6 +96,44 @@ struct BrowserIntegrationView: View {
                 .padding(.vertical, 8)
             }
             
+            // Production Extension ID Configuration
+            GroupBox("Production Extension ID") {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Image(systemName: "key.fill")
+                            .foregroundColor(.orange)
+                        Text("Chrome Web Store Extension ID")
+                            .fontWeight(.medium)
+                        Spacer()
+                    }
+                    
+                    Text("After publishing to Chrome Web Store, configure the assigned extension ID here.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Current Production ID:")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(BrowserIntegrationManager.shared.getProductionExtensionID() ?? "mdllhgebmaocbeagkopjjmcabalbiikh")
+                                .font(.system(.caption, design: .monospaced))
+                                .padding(6)
+                                .background(Color(NSColor.controlBackgroundColor))
+                                .cornerRadius(4)
+                        }
+                        
+                        Spacer()
+                        
+                        Button("Configure ID...") {
+                            configureExtensionID()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+            
             // Actions
             HStack {
                 Button("Refresh Status") {
@@ -151,6 +189,60 @@ struct BrowserIntegrationView: View {
         } else {
             // Production: Open Chrome Web Store
             BrowserIntegrationManager.shared.openExtensionInstallPage()
+        }
+    }
+    
+    private func configureExtensionID() {
+        let alert = NSAlert()
+        alert.messageText = "Configure Chrome Web Store Extension ID"
+        alert.informativeText = """
+        After publishing your extension to the Chrome Web Store, Google assigns a unique extension ID. 
+        
+        To find your extension ID:
+        1. Go to Chrome Web Store Developer Dashboard
+        2. Select your published extension
+        3. Copy the extension ID from the URL or dashboard
+        
+        Enter the new extension ID below:
+        """
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "Update")
+        alert.addButton(withTitle: "Cancel")
+        
+        // Add text field for extension ID input
+        let inputField = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
+        inputField.placeholderString = "Enter Chrome Web Store extension ID..."
+        inputField.stringValue = BrowserIntegrationManager.shared.getProductionExtensionID() ?? ""
+        alert.accessoryView = inputField
+        
+        let response = alert.runModal()
+        
+        if response == .alertFirstButtonReturn {
+            let newExtensionID = inputField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if !newExtensionID.isEmpty && newExtensionID.count == 32 {
+                // Configure the new extension ID
+                BrowserIntegrationManager.shared.configureProductionExtensionID(newExtensionID)
+                
+                // Refresh the integration status
+                integrationStatus = BrowserIntegrationManager.shared.checkIntegrationStatus()
+                
+                // Show success message
+                let successAlert = NSAlert()
+                successAlert.messageText = "Extension ID Updated"
+                successAlert.informativeText = "The production extension ID has been updated successfully. Native host manifests have been reinstalled with the new ID."
+                successAlert.alertStyle = .informational
+                successAlert.addButton(withTitle: "OK")
+                successAlert.runModal()
+            } else {
+                // Show error for invalid extension ID
+                let errorAlert = NSAlert()
+                errorAlert.messageText = "Invalid Extension ID"
+                errorAlert.informativeText = "Extension IDs must be exactly 32 characters long. Please check your Chrome Web Store dashboard for the correct ID."
+                errorAlert.alertStyle = .warning
+                errorAlert.addButton(withTitle: "OK")
+                errorAlert.runModal()
+            }
         }
     }
 }

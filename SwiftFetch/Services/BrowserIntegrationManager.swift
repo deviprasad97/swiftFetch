@@ -6,17 +6,42 @@ class BrowserIntegrationManager {
     
     private let nativeHostID = "com.swiftfetch.nativehost"
     
-    // Extension IDs
-    private var extensionID: String {
+    // Extension IDs - Support multiple IDs for different installations
+    private var extensionIDs: [String] {
+        var ids = [String]()
+        
         #if DEBUG
-        // Development ID (unpacked): pgbhajnajdnlkcpkjbfjoogjpdgeocdb
-        return "pgbhajnajdnlkcpkjbfjoogjpdgeocdb"
-        #else
-        // Production ID from Chrome Web Store: mdllhgebmaocbeagkopjjmcabalbiikh
-        return "mdllhgebmaocbeagkopjjmcabalbiikh"
+        // Development ID (unpacked)
+        ids.append("pgbhajnajdnlkcpkjbfjoogjpdgeocdb")
         #endif
+        
+        // Check for user-configured production ID
+        if let userConfiguredID = UserDefaults.standard.string(forKey: "ProductionExtensionID"),
+           !userConfiguredID.isEmpty {
+            ids.append(userConfiguredID)
+        }
+        
+        // Default production ID - NOTE: This will need to be updated after Chrome Web Store publication
+        // Users can configure the actual ID through the app settings
+        ids.append("mdllhgebmaocbeagkopjjmcabalbiikh")
+        
+        return ids
     }
     private let chromeWebStoreURL = "https://chrome.google.com/webstore/detail/swiftfetch/mdllhgebmaocbeagkopjjmcabalbiikh"
+    
+    // Configure production extension ID (called after Chrome Web Store publication)
+    func configureProductionExtensionID(_ id: String) {
+        UserDefaults.standard.set(id, forKey: "ProductionExtensionID")
+        print("✅ Configured production extension ID: \(id)")
+        
+        // Reinstall native hosts with new ID
+        installNativeHostForAllBrowsers()
+    }
+    
+    // Get current production extension ID
+    func getProductionExtensionID() -> String? {
+        return UserDefaults.standard.string(forKey: "ProductionExtensionID")
+    }
     
     // Check if browser integration is set up
     func checkIntegrationStatus() -> BrowserIntegrationStatus {
@@ -98,13 +123,14 @@ class BrowserIntegrationManager {
                 "allowed_extensions": ["swiftfetch@extension"]
             ]
         } else {
-            // Chromium-based browsers
+            // Chromium-based browsers - Support multiple extension IDs
+            let allowedOrigins = extensionIDs.map { "chrome-extension://\($0)/" }
             return [
                 "name": nativeHostID,
                 "description": "SwiftFetch Native Messaging Host",
                 "path": appPath,
                 "type": "stdio",
-                "allowed_origins": ["chrome-extension://\(extensionID)/"]
+                "allowed_origins": allowedOrigins
             ]
         }
     }
